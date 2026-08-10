@@ -237,6 +237,16 @@ export default function Contact() {
                     <span>Send via WhatsApp</span>
                   </button>
                 </div>
+
+                <a
+                  href="https://wa.me/919057262630"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 border border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white font-semibold py-3 px-6 rounded-xl transition duration-200"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Connect directly via WhatsApp</span>
+                </a>
               </form>
             </div>
           </div>
