@@ -1,25 +1,29 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, MessageSquare, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageSquare, AlertCircle, CheckCircle2, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ username: '', email: '', number: '', message: '' });
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const validate = () => {
     const tempErrors = {};
-    if (!formData.name.trim()) tempErrors.name = 'Name is required';
-    
+    if (!formData.username.trim()) tempErrors.username = 'Username is required';
+
     if (!formData.email.trim()) {
       tempErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       tempErrors.email = 'Please enter a valid email address';
     }
-    
-    if (!formData.subject.trim()) tempErrors.subject = 'Subject is required';
+
+    if (!formData.number.trim()) {
+      tempErrors.number = 'Phone number is required';
+    } else if (!/^[0-9+\-\s()]{7,15}$/.test(formData.number.trim())) {
+      tempErrors.number = 'Please enter a valid phone number';
+    }
+
     if (!formData.message.trim()) tempErrors.message = 'Message is required';
-    
+
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -27,25 +31,36 @@ export default function Contact() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for that field when typing
+
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleAction = (e, method) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setIsSubmitting(true);
-    setSubmitStatus(null);
+    const { username, email, number, message } = formData;
 
-    // Simulate API request
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1500);
+    // Format the message body
+    const formattedText = `Hi, I'm ${username}.\n\nEmail: ${email}\nPhone: ${number}\n\nMessage:\n${message}`;
+
+    if (method === 'whatsapp') {
+      // Redirect to WhatsApp (using the phone number from your contact info)
+      const whatsappUrl = `https://wa.me/919057262630?text=${encodeURIComponent(formattedText)}`;
+      window.open(whatsappUrl, '_blank');
+    } else if (method === 'email') {
+      // Redirect to Email client
+      const mailtoUrl = `mailto:kvikaskumar040@gmail.com?subject=${encodeURIComponent(`Portfolio Contact from ${username}`)}&body=${encodeURIComponent(formattedText)}`;
+      window.location.href = mailtoUrl;
+    }
+
+    setSubmitStatus('success');
+    setFormData({ username: '', email: '', number: '', message: '' });
+
+    // Clear success message after 5 seconds
+    setTimeout(() => setSubmitStatus(null), 5000);
   };
 
   return (
@@ -76,8 +91,8 @@ export default function Contact() {
               </div>
               <div className="space-y-1">
                 <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Email</h4>
-                <a href="mailto:contact@vikas.dev" className="text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">
-                  contact@vikas.dev
+                <a href="mailto:kvikaskumar040@gmail.com" className="text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">
+                  kvikaskumar040@gmail.com
                 </a>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Response within 24 hours</p>
               </div>
@@ -89,8 +104,8 @@ export default function Contact() {
               </div>
               <div className="space-y-1">
                 <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Location</h4>
-                <p className="text-slate-700 dark:text-slate-200 font-medium">Bengaluru, Karnataka, India</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Open to hybrid/remote setups</p>
+                <p className="text-slate-700 dark:text-slate-200 font-medium">Jaipur, Rajasthan, India</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Open to new opportunities/remote jobs</p>
               </div>
             </div>
 
@@ -100,8 +115,8 @@ export default function Contact() {
               </div>
               <div className="space-y-1">
                 <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Phone</h4>
-                <a href="tel:+919876543210" className="text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition font-medium">
-                  +91 98765 43210
+                <a href="tel:+919057262630" className="text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition font-medium">
+                  +91 9057262630
                 </a>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Mon - Fri, 9am - 6pm IST</p>
               </div>
@@ -111,41 +126,39 @@ export default function Contact() {
           {/* Right Column: Contact Form */}
           <div className="lg:col-span-7">
             <div className="gradient-border-card p-8 rounded-2xl">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {/* Name field */}
+                  {/* Username field */}
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-xs font-semibold text-slate-500 dark:text-slate-400">Your Name</label>
+                    <label htmlFor="username" className="text-xs font-semibold text-slate-500 dark:text-slate-400">Username</label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
+                      id="username"
+                      name="username"
+                      value={formData.username}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 ${
-                        errors.name ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
-                      }`}
+                      className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 ${errors.username ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
+                        }`}
                       placeholder="John Doe"
                     />
-                    {errors.name && (
+                    {errors.username && (
                       <p className="text-xs text-rose-400 flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3" /> {errors.name}
+                        <AlertCircle className="w-3 h-3" /> {errors.username}
                       </p>
                     )}
                   </div>
 
                   {/* Email field */}
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-xs font-semibold text-slate-500 dark:text-slate-400">Your Email</label>
+                    <label htmlFor="email" className="text-xs font-semibold text-slate-500 dark:text-slate-400">Email Address</label>
                     <input
                       type="email"
                       id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 ${
-                        errors.email ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
-                      }`}
+                      className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 ${errors.email ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
+                        }`}
                       placeholder="john@example.com"
                     />
                     {errors.email && (
@@ -156,23 +169,22 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Subject field */}
+                {/* Number field */}
                 <div className="space-y-2">
-                  <label htmlFor="subject" className="text-xs font-semibold text-slate-500 dark:text-slate-400">Subject</label>
+                  <label htmlFor="number" className="text-xs font-semibold text-slate-500 dark:text-slate-400">Phone Number</label>
                   <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
+                    type="tel"
+                    id="number"
+                    name="number"
+                    value={formData.number}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 ${
-                      errors.subject ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
-                    }`}
-                    placeholder="Project Inquiry"
+                    className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 ${errors.number ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
+                      }`}
+                    placeholder="+91 9876543210"
                   />
-                  {errors.subject && (
+                  {errors.number && (
                     <p className="text-xs text-rose-400 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" /> {errors.subject}
+                      <AlertCircle className="w-3 h-3" /> {errors.number}
                     </p>
                   )}
                 </div>
@@ -186,9 +198,8 @@ export default function Contact() {
                     rows="5"
                     value={formData.message}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 resize-none ${
-                      errors.message ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
-                    }`}
+                    className={`w-full px-4 py-3 bg-white dark:bg-slate-950 border rounded-xl text-sm text-slate-900 dark:text-slate-200 outline-none transition focus:border-indigo-500/80 focus:ring-1 focus:ring-indigo-500/30 resize-none ${errors.message ? 'border-rose-500/50' : 'border-slate-200 dark:border-slate-800'
+                      }`}
                     placeholder="Describe your project idea in detail..."
                   ></textarea>
                   {errors.message && (
@@ -202,24 +213,30 @@ export default function Contact() {
                 {submitStatus === 'success' && (
                   <div className="flex items-center gap-2 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl text-sm">
                     <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-                    <span>Thank you! Your message has been sent successfully. I will get back to you soon.</span>
+                    <span>Redirecting... Your form has been processed!</span>
                   </div>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-600/15"
-                >
-                  {isSubmitting ? (
-                    <span>Sending Message...</span>
-                  ) : (
-                    <>
-                      <span>Send Message</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
+                {/* Action Buttons */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <button
+                    type="button"
+                    onClick={(e) => handleAction(e, 'email')}
+                    className="w-full inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl transition duration-200 shadow-lg shadow-indigo-600/15"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>Send via Email</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={(e) => handleAction(e, 'whatsapp')}
+                    className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold py-3 px-6 rounded-xl transition duration-200 shadow-lg shadow-[#25D366]/20"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Send via WhatsApp</span>
+                  </button>
+                </div>
               </form>
             </div>
           </div>

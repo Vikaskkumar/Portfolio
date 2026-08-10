@@ -21,10 +21,10 @@ export default function Footer() {
 
         {/* Center: Social Links */}
         <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
+          <a href="https://github.com/Vikas-kumar-kumawat" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
             <Github className="w-5 h-5" />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
+          <a href="https://www.linkedin.com/in/vikas-kumar-kumawat-bb477629a/" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
             <Linkedin className="w-5 h-5" />
           </a>
           <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">

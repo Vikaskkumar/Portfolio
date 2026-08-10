@@ -69,10 +69,10 @@ print(f"Hi, I'm {developer['name']}. Welcome to my portfolio!")`;
 
           {/* Social Links (Adjusted colors to match the orange theme of the image) */}
           <div className="flex items-center gap-6 pt-8">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-[#ea580c] hover:text-[#c2410c] dark:text-[#f97316] dark:hover:text-[#fdba74] transition transform hover:scale-110">
+            <a href="https://github.com/Vikas-kumar-kumawat" target="_blank" rel="noreferrer" className="text-[#ea580c] hover:text-[#c2410c] dark:text-[#f97316] dark:hover:text-[#fdba74] transition transform hover:scale-110">
               <Github className="w-7 h-7" />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-[#ea580c] hover:text-[#c2410c] dark:text-[#f97316] dark:hover:text-[#fdba74] transition transform hover:scale-110">
+            <a href="https://www.linkedin.com/in/vikas-kumar-kumawat-bb477629a/" target="_blank" rel="noreferrer" className="text-[#ea580c] hover:text-[#c2410c] dark:text-[#f97316] dark:hover:text-[#fdba74] transition transform hover:scale-110">
               <Linkedin className="w-7 h-7" />
             </a>
             <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-[#ea580c] hover:text-[#c2410c] dark:text-[#f97316] dark:hover:text-[#fdba74] transition transform hover:scale-110">
