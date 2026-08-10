@@ -32,11 +32,11 @@ const timelineData = [
   }
 ];
 
-export default function JourneyTimeline() {
+export default function Experience() {
   const viewProps = { once: true, margin: "-50px" };
 
   return (
-    <section id="journey" className="relative py-12 bg-black overflow-hidden font-sans">
+    <section id="experience" className="relative py-12 bg-black overflow-hidden font-sans">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
 
         {/* Header Section */}
