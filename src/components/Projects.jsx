@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ExternalLink, FolderGit2, Layers } from 'lucide-react';
 import { Github } from './BrandIcons';
+import ecommerceImage from '../assets/e-com.png';
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -14,32 +15,25 @@ export default function Projects() {
 
   const projectsData = [
     {
-      title: 'DevFlow - Developer Community Q&A',
-      description: 'A modern, full-stack Q&A platform for developers. Features voting, advanced search, tag systems, developer profiles, and rich markdown formatting.',
-      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS'],
+      title: 'Full stack social media application',
+      description: 'A modern, Social media application for developers. Features authintication, customized feed, follow/unfollow , developer profiles, like and comment on posts.',
+      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Cloudinary', 'jwt', 'bcrypt'],
       category: 'fullstack',
       image: '/images/portfolio1.png',
       demoUrl: 'https://github.com',
-      githubUrl: 'https://github.com',
+      githubUrl: 'https://github.com/Vikaskkumar/StarkNet-',
     },
     {
-      title: 'NovaCrypto - Live Trading Dashboard',
-      description: 'Real-time cryptocurrency analytics platform. Integrates charts, price indicators, market cap rankings, and order-book visuals powered by external APIs.',
-      tech: ['React', 'Next.js', 'Tailwind CSS', 'Chart.js', 'CoinGecko API'],
+      title: 'ShopEase - Modern E-Commerce Store',
+      description:
+        'A responsive e-commerce web application built with React featuring product listings, category filtering, shopping cart functionality, product detail pages, and a streamlined checkout experience. Designed with a clean UI and optimized for performance across all devices.',
+      tech: ['React', 'Tailwind CSS', 'React Router', 'Context API', 'Vite'],
       category: 'frontend',
-      image: '/images/portfolio2.1.png',
-      demoUrl: 'https://github.com',
-      githubUrl: 'https://github.com',
+      image: ecommerceImage,
+      demoUrl: 'https://e-commerce1-fawn.vercel.app/',
+      githubUrl: 'https://github.com/Vikaskkumar/e-commerce1',
     },
-    {
-      title: 'ZenTask - Collaborative Workspaces',
-      description: 'A visual task organizer with team workspace integrations. Includes drag-and-drop boards, socket-driven chat, task assignees, and progress visual analytics.',
-      tech: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Socket.io'],
-      category: 'fullstack',
-      image: '/images/portfolio3.png',
-      demoUrl: 'https://github.com',
-      githubUrl: 'https://github.com',
-    },
+
     {
       title: 'GitScout - GitHub Analyzer Tool',
       description: 'Repository analytics tool designed to inspect developer accounts. Measures code composition metrics, star ratings, commit volumes, and recent activity.',
@@ -79,11 +73,10 @@ export default function Projects() {
             <button
               key={filter.id}
               onClick={() => setActiveFilter(filter.id)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 border ${
-                activeFilter === filter.id
-                  ? 'bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-600/20'
-                  : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700'
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 border ${activeFilter === filter.id
+                ? 'bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-600/20'
+                : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
             >
               {filter.name}
             </button>
