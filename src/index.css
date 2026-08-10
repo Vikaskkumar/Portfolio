@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Outfit", sans-serif;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+/* Global Transitions for smooth theme toggle */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fcf2e8;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #0f1423;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #1e2438;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Codecademy Warm Peach & Deep Navy Backdrop Theme */
+.grid-backdrop {
+  position: relative;
+  background-color: #fcf2e8; /* Codecademy light peach */
+  color: #10162f; /* Codecademy deep navy */
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(48, 105, 152, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 224, 84, 0.03) 0%, transparent 40%);
+}
+
+.dark .grid-backdrop {
+  background-color: #0f1423; /* Codecademy deep dark blue */
+  color: #fcf2e8; /* Light peach text */
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(48, 105, 152, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 224, 84, 0.06) 0%, transparent 45%);
+}
+
+.grid-overlay {
+  display: none;
+}
+
+/* Text glow styles */
+.text-glow {
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+.dark .text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Codecademy / Neobrutalist Blocky Border Cards */
+.gradient-border-card {
+  position: relative;
+  background: #ffffff;
+  border: 2.5px solid #10162f;
+  box-shadow: 4px 4px 0px 0px #10162f;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left-width: 8px; /* Classic Codecademy left accent stripe */
+}
+
+.gradient-border-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0px 0px #10162f;
+}
+
+.dark .gradient-border-card {
+  background: #1e2438;
+  border: 2.5px solid #fcf2e8;
+  box-shadow: 4px 4px 0px 0px #fcf2e8;
+}
+
+.dark .gradient-border-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0px 0px #fcf2e8;
+}
+
+/* Stencil Text (Technologies header) */
+.stencil-text {
+  font-family: "Plus Jakarta Sans", "Outfit", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: transparent;
+  -webkit-text-stroke: 2.5px #10162f;
+  text-shadow: 3px 3px 0px rgba(16, 22, 47, 0.1);
+}
+
+.dark .stencil-text {
+  -webkit-text-stroke: 2.5px #cda26b;
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.6);
+}
