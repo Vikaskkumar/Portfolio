@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ExternalLink, FolderGit2, Layers } from 'lucide-react';
 import { Github } from './BrandIcons';
 import ecommerceImage from '../assets/e-com.png';
+import cgpaImage from '../assets/cgpa-image.png';
+import socialImage from '../assets/social2.png'
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -15,11 +17,21 @@ export default function Projects() {
 
   const projectsData = [
     {
-      title: 'Full stack social media application',
-      description: 'A modern, Social media application for developers. Features authintication, customized feed, follow/unfollow , developer profiles, like and comment on posts.',
-      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Cloudinary', 'jwt', 'bcrypt'],
+      title: 'Full Stack Social Media Application',
+      description:
+        'A modern social media platform for developers featuring secure authentication, personalized feeds, follow/unfollow functionality, developer profiles, and interactive post engagement through likes and comments.',
+      tech: [
+        'React',
+        'Node.js',
+        'Express',
+        'MongoDB',
+        'Tailwind CSS',
+        'Cloudinary',
+        'JWT',
+        'bcrypt'
+      ],
       category: 'fullstack',
-      image: '/images/portfolio1.png',
+      image: socialImage,
       demoUrl: 'https://github.com',
       githubUrl: 'https://github.com/Vikaskkumar/StarkNet-',
     },
@@ -35,13 +47,14 @@ export default function Projects() {
     },
 
     {
-      title: 'GitScout - GitHub Analyzer Tool',
-      description: 'Repository analytics tool designed to inspect developer accounts. Measures code composition metrics, star ratings, commit volumes, and recent activity.',
-      tech: ['React', 'GitHub API', 'Tailwind CSS', 'Context API'],
+      title: 'CGPA Calculator - Academic Grade Calculator',
+      description:
+        'A clean and responsive CGPA calculator built with React that allows students to calculate semester-wise and cumulative CGPA with real-time updates, grade-to-point conversion, and an intuitive user interface optimized for quick academic planning.',
+      tech: ['Tailwind CSS', 'JavaScript', 'Html'],
       category: 'tools',
-      image: '/images/portfolio4.png',
-      demoUrl: 'https://github.com',
-      githubUrl: 'https://github.com',
+      image: cgpaImage,
+      demoUrl: 'https://cgpa-calculator.vercel.app/',
+      githubUrl: 'https://github.com/Vikaskkumar/cgpa-calculator',
     },
   ];
 
