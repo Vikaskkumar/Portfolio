@@ -32,7 +32,7 @@ export default function Projects() {
       ],
       category: 'fullstack',
       image: socialImage,
-      demoUrl: 'https://github.com',
+      demoUrl: 'https://stark-net-one.vercel.app/',
       githubUrl: 'https://github.com/Vikaskkumar/StarkNet-',
     },
     {
@@ -53,7 +53,7 @@ export default function Projects() {
       tech: ['Tailwind CSS', 'JavaScript', 'Html'],
       category: 'tools',
       image: cgpaImage,
-      demoUrl: 'https://cgpa-calculator.vercel.app/',
+      demoUrl: 'https://cgpa-calculator-ruddy-sigma.vercel.app/',
       githubUrl: 'https://github.com/Vikaskkumar/cgpa-calculator',
     },
   ];
