@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, Mail, Terminal, Check, Copy, Download } from 'lucide-react';
 import { Github, Linkedin, Twitter } from './BrandIcons';
-import resumePDF from '../assets/resume.pdf';
+import resumePDF from '../assets/resume(vikas).pdf';
 
 export default function Hero() {
   const [copied, setCopied] = useState(false);
