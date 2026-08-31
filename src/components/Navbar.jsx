@@ -51,10 +51,10 @@ export default function Navbar({ theme, toggleTheme }) {
         {/* Logo */}
         <a
           href="#home"
-          className="inline-flex items-center font-display font-black text-xs sm:text-sm tracking-wider uppercase border-[2.5px] border-[var(--c-brand)] overflow-hidden rounded-lg"
+          className="inline-flex items-center gap-1 font-display font-black text-xl tracking-tighter"
         >
-          <span className="bg-[var(--c-brand)] text-[var(--c-bg)] px-2 py-1">VIKAS</span>
-          <span className="bg-[var(--c-yellow)] text-[#10162f] px-2 py-1">DEV</span>
+          <span className="text-[var(--c-text)]">Vikas</span>
+          <span className="text-[var(--c-accent)]">.</span>
         </a>
 
         {/* Desktop Nav Links */}

@@ -84,7 +84,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative py-20 sm:py-24 border-t border-[var(--c-border)] overflow-hidden text-left">
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[var(--c-accent)]/5 rounded-full blur-3xl -z-10" />
+
 
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}

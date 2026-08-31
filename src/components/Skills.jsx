@@ -103,11 +103,7 @@ export default function Skills() {
   return (
     <section id="about" className="relative py-24 sm:py-28 border-t border-[var(--c-border)] overflow-hidden">
 
-      {/* Ambient blobs */}
-      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute -top-10 left-1/4  w-72 h-72 bg-blue-500/5   rounded-full blur-3xl" />
-        <div className="absolute bottom-0  right-1/4 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl" />
-      </div>
+
 
       <div className="max-w-6xl mx-auto px-6">
 

@@ -25,11 +25,7 @@ print(f"Hi, I'm {developer['name']}. Welcome!")`;
 
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-24 sm:pt-28 pb-16 sm:pb-20 overflow-hidden">
-      {/* Ambient background blobs */}
-      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-[var(--c-accent)]/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-20 -right-20 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl" />
-      </div>
+
 
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 

@@ -1,44 +1,43 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ─── Design tokens ─────────────────────────────────────────── */
 :root {
-  --c-bg:         #f8f5f0;        /* warm off-white */
-  --c-surface:    #ffffff;
-  --c-surface-2:  #f2ede6;        /* subtle warm grey */
-  --c-border:     #e5ddd4;
-  --c-text:       #1a1614;
-  --c-text-2:     #5a524a;
-  --c-text-3:     #9a8f85;
-  --c-brand:      #10162f;
-  --c-accent:     #f97316;
-  --c-yellow:     #ffd23f;
-  --c-blue:       #306998;
-  --shadow-neo:   4px 4px 0px 0px #10162f;
-  --shadow-neo-lg:6px 6px 0px 0px #10162f;
+  --c-bg:         #f8fafc;        /* slightly darker off-white to make white cards pop */
+  --c-surface:    #ffffff;        /* pure white for cards */
+  --c-surface-2:  #f1f5f9;        /* distinct secondary surface */
+  --c-border:     #cbd5e1;        /* darker border (slate-300) for clear element outlines */
+  --c-text:       #020617;        /* almost black (slate-950) for maximum text visibility */
+  --c-text-2:     #334155;        /* darker secondary text (slate-700) */
+  --c-text-3:     #64748b;        /* darker tertiary text (slate-500) */
+  --c-brand:      #020617;
+  --c-accent:     #d97706;        /* darker accent color for better contrast */
+  --c-yellow:     #b45309;
+  --c-blue:       #1d4ed8;
+  --shadow-neo:   0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.08); /* slightly stronger shadows */
+  --shadow-neo-lg:0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
 .dark {
-  --c-bg:         #0d1117;        /* GitHub-dark-style deep navy */
-  --c-surface:    #161b22;
-  --c-surface-2:  #1f2937;
-  --c-border:     #30363d;
-  --c-text:       #f0ece8;
-  --c-text-2:     #a0a8b4;
-  --c-text-3:     #6e7781;
-  --c-brand:      #f0ece8;
+  --c-bg:         #0a0a0a;        /* sleek dark */
+  --c-surface:    #121212;
+  --c-surface-2:  #1a1a1a;
+  --c-border:     #2a2a2a;
+  --c-text:       #ededed;
+  --c-text-2:     #a1a1aa;
+  --c-text-3:     #71717a;
+  --c-brand:      #ededed;
   --c-accent:     #fb923c;
-  --c-yellow:     #ffe054;
-  --c-blue:       #79b8ff;
-  --shadow-neo:   4px 4px 0px 0px #f0ece8;
-  --shadow-neo-lg:6px 6px 0px 0px #f0ece8;
+  --c-yellow:     #fcd34d;
+  --c-blue:       #60a5fa;
+  --shadow-neo:   0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-neo-lg:0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 }
 
 @theme {
-  --font-sans: "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-display: "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Inter", sans-serif;
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
@@ -69,28 +68,30 @@ body {
   position: relative;
   background-color: var(--c-bg);
   color: var(--c-text);
-  background-image:
-    radial-gradient(ellipse at 10% 0%,   rgba(249,115,22,0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 100%, rgba(48,105,152,0.05) 0%, transparent 50%);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(234, 88, 12, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(37, 99, 235, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(234, 88, 12, 0.03) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(37, 99, 235, 0.03) 0px, transparent 50%);
+  background-attachment: fixed;
 }
 
 .dark .grid-backdrop {
-  background-image:
-    radial-gradient(ellipse at 10% 0%,   rgba(56,189,248,0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 100%, rgba(168,85,247,0.04) 0%, transparent 50%);
+  background-color: var(--c-bg);
+  background-image: none;
 }
 
 /* ─── Neobrutalist project cards ─────────────────────────────── */
 .gradient-border-card {
   position: relative;
   background: var(--c-surface);
-  border: 2.5px solid var(--c-brand);
-  border-left-width: 7px;
+  border: 1px solid var(--c-border);
+  border-radius: 1rem;
   box-shadow: var(--shadow-neo);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .gradient-border-card:hover {
-  transform: translate(-3px, -3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-neo-lg);
 }
 

@@ -20,7 +20,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative py-20 sm:py-24 border-t border-[var(--c-border)] overflow-hidden">
-      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-10" />
+
 
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
