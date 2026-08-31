@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, MessageSquare, AlertCircle, CheckCircle2, MessageCircle } from 'lucide-react';
+import { useSiteData } from '../hooks/useSiteData';
 
 export default function Contact() {
+  const { siteData } = useSiteData();
+  const contactInfo = siteData.contact;
   const [formData, setFormData] = useState({ username: '', email: '', number: '', message: '' });
   const [errors, setErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -36,9 +39,9 @@ export default function Contact() {
     const { username, email, number, message } = formData;
     const formattedText = `Hi, I'm ${username}.\n\nEmail: ${email}\nPhone: ${number}\n\nMessage:\n${message}`;
     if (method === 'whatsapp') {
-      window.open(`https://wa.me/919057262630?text=${encodeURIComponent(formattedText)}`, '_blank');
+      window.open(`https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(formattedText)}`, '_blank');
     } else if (method === 'email') {
-      window.location.href = `mailto:kvikaskumar040@gmail.com?subject=${encodeURIComponent(`Portfolio Contact from ${username}`)}&body=${encodeURIComponent(formattedText)}`;
+      window.location.href = `mailto:${contactInfo.email}?subject=${encodeURIComponent(`Portfolio Contact from ${username}`)}&body=${encodeURIComponent(formattedText)}`;
     }
     setSubmitStatus('success');
     setFormData({ username: '', email: '', number: '', message: '' });
@@ -56,8 +59,8 @@ export default function Contact() {
       colorClass: 'text-blue-500',
       bgStyle: { background: 'rgba(59,130,246,0.1)' },
       label: 'Email',
-      value: 'kvikaskumar040@gmail.com',
-      href: 'mailto:kvikaskumar040@gmail.com',
+      value: contactInfo.email,
+      href: `mailto:${contactInfo.email}`,
       sub: 'Response within 24 hours',
     },
     {
@@ -65,7 +68,7 @@ export default function Contact() {
       colorClass: 'text-purple-500',
       bgStyle: { background: 'rgba(168,85,247,0.1)' },
       label: 'Location',
-      value: 'Jaipur, Rajasthan, India',
+      value: contactInfo.location,
       sub: 'Open to remote opportunities',
     },
     {
@@ -73,8 +76,8 @@ export default function Contact() {
       colorClass: 'text-emerald-500',
       bgStyle: { background: 'rgba(16,185,129,0.1)' },
       label: 'Phone',
-      value: '+91 9057262630',
-      href: 'tel:+919057262630',
+      value: contactInfo.phone,
+      href: `tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`,
       sub: 'Mon – Fri, 9am – 6pm IST',
     },
   ];
@@ -125,7 +128,7 @@ export default function Contact() {
 
             {/* WhatsApp direct */}
             <a
-              href="https://wa.me/919057262630"
+              href={`https://wa.me/${contactInfo.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 p-4 bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366] hover:text-white font-semibold rounded-2xl transition-all text-sm"

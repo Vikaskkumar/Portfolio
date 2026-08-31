@@ -1,8 +1,10 @@
 import { ArrowUp, Mail, Shield } from 'lucide-react';
 import { Github, Linkedin, Twitter } from './BrandIcons';
 import { Link } from 'react-router-dom';
+import { useSiteData } from '../hooks/useSiteData';
 
 export default function Footer() {
+  const { siteData } = useSiteData();
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   const year = new Date().getFullYear();
 
@@ -10,7 +12,7 @@ export default function Footer() {
     { href: 'https://github.com/Vikas-kumar-kumawat', Icon: Github },
     { href: 'https://www.linkedin.com/in/vikas-kumar-kumawat-bb477629a/', Icon: Linkedin },
     { href: 'https://twitter.com', Icon: Twitter },
-    { href: 'mailto:kvikaskumar040@gmail.com', Icon: Mail },
+    { href: `mailto:${siteData.contact.email}`, Icon: Mail },
   ];
 
   return (

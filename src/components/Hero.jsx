@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { ArrowRight, Mail, Terminal, Check, Copy, Download } from 'lucide-react';
 import { Github, Linkedin, Twitter } from './BrandIcons';
-import resumePDF from '../assets/resume(vikas).pdf';
+import { useSiteData } from '../hooks/useSiteData';
 
 export default function Hero() {
   const [copied, setCopied] = useState(false);
+  const { siteData } = useSiteData();
 
   const pythonCode = `# main.py
 developer = {
@@ -68,8 +69,8 @@ print(f"Hi, I'm {developer['name']}. Welcome!")`;
               <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href={resumePDF}
-              download="Vikas_Resume.pdf"
+              href={siteData.resume.url}
+              download={siteData.resume.name}
               className="inline-flex items-center gap-2 bg-[var(--c-surface)] hover:bg-[var(--c-surface-2)] text-[var(--c-text)] font-bold px-6 py-3.5 rounded-xl border border-[var(--c-border)] transition-all transform hover:-translate-y-0.5"
             >
               <Download className="w-4 h-4" />
@@ -83,7 +84,7 @@ print(f"Hi, I'm {developer['name']}. Welcome!")`;
               { href: 'https://github.com/Vikas-kumar-kumawat', Icon: Github },
               { href: 'https://www.linkedin.com/in/vikas-kumar-kumawat-bb477629a/', Icon: Linkedin },
               { href: 'https://twitter.com', Icon: Twitter },
-              { href: 'mailto:kvikaskumar040@gmail.com', Icon: Mail },
+              { href: `mailto:${siteData.contact.email}`, Icon: Mail },
             ].map(({ href, Icon }) => (
               <a
                 key={href}
