@@ -35,11 +35,6 @@ print(f"Hi, I'm {developer['name']}. Welcome!")`;
         {/* Left: Info */}
         <div className="flex flex-col justify-center text-left">
 
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-[var(--c-surface-2)] border border-[var(--c-border)] px-3 py-1.5 rounded-full text-xs font-semibold text-[var(--c-text-2)] mb-6 w-fit">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Available for opportunities
-          </div>
 
           {/* Greeting */}
           <p className="text-lg sm:text-xl font-medium text-[var(--c-text-2)] mb-2 flex items-center gap-2">
