@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <Router>
-      <div className="grid-backdrop min-h-screen text-slate-800 dark:text-slate-100 selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+      <div className="grid-backdrop min-h-screen selection:bg-orange-400 selection:text-white transition-colors duration-300">
         <Routes>
           <Route path="/" element={<Home theme={theme} toggleTheme={toggleTheme} />} />
           <Route path="/admin" element={<Admin theme={theme} toggleTheme={toggleTheme} />} />

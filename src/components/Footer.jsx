@@ -3,54 +3,58 @@ import { Github, Linkedin, Twitter } from './BrandIcons';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const year = new Date().getFullYear();
 
-  const currentYear = new Date().getFullYear();
+  const socials = [
+    { href: 'https://github.com/Vikas-kumar-kumawat', Icon: Github },
+    { href: 'https://www.linkedin.com/in/vikas-kumar-kumawat-bb477629a/', Icon: Linkedin },
+    { href: 'https://twitter.com', Icon: Twitter },
+    { href: 'mailto:kvikaskumar040@gmail.com', Icon: Mail },
+  ];
 
   return (
-    <footer className="bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 py-12 transition-colors duration-300">
+    <footer className="bg-[var(--c-surface)] border-t border-[var(--c-border)] py-10 transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Left: Copyright */}
-        <div className="text-left space-y-1">
-          <h3 className="text-lg font-bold font-display text-slate-900 dark:text-white">Vikas.</h3>
-          <p className="text-xs text-slate-500">
-            &copy; {currentYear} Vikas. All rights reserved. Built with React & Tailwind CSS.
+
+        {/* Left: Branding */}
+        <div className="text-left space-y-1.5">
+          <h3 className="text-lg font-black font-display text-[var(--c-text)]">Vikas.</h3>
+          <p className="text-xs text-[var(--c-text-3)]">
+            &copy; {year} Vikas Kumar. Built with React & Tailwind CSS.
           </p>
-          <div className="pt-1">
-            <Link to="/admin" className="inline-flex items-center gap-1 text-[10px] text-slate-400 hover:text-purple-500 transition">
-              <Shield className="w-3 h-3" /> Admin Login
-            </Link>
-          </div>
-        </div>
-
-        {/* Center: Social Links */}
-        <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
-          <a href="https://github.com/Vikas-kumar-kumawat" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
-            <Github className="w-5 h-5" />
-          </a>
-          <a href="https://www.linkedin.com/in/vikas-kumar-kumawat-bb477629a/" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
-            <Linkedin className="w-5 h-5" />
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
-            <Twitter className="w-5 h-5" />
-          </a>
-          <a href="mailto:contact@vikas.dev" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition transform hover:scale-105">
-            <Mail className="w-5 h-5" />
-          </a>
-        </div>
-
-        {/* Right: Scroll to Top */}
-        <div>
-          <button
-            onClick={scrollToTop}
-            className="group flex items-center justify-center p-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 transition duration-150"
-            aria-label="Scroll to top"
+          <Link
+            to="/admin"
+            className="inline-flex items-center gap-1 text-[10px] text-[var(--c-text-3)] hover:text-[var(--c-accent)] transition"
           >
-            <ArrowUp className="w-4 h-4 transition group-hover:-translate-y-0.5" />
-          </button>
+            <Shield className="w-3 h-3" />
+            Admin Login
+          </Link>
         </div>
+
+        {/* Center: Socials */}
+        <div className="flex items-center gap-4">
+          {socials.map(({ href, Icon }) => (
+            <a
+              key={href}
+              href={href}
+              target={href.startsWith('http') ? '_blank' : undefined}
+              rel="noreferrer"
+              className="p-2 rounded-lg text-[var(--c-text-3)] hover:text-[var(--c-accent)] hover:bg-[var(--c-surface-2)] transition-all"
+            >
+              <Icon className="w-5 h-5" />
+            </a>
+          ))}
+        </div>
+
+        {/* Right: Scroll to top */}
+        <button
+          onClick={scrollToTop}
+          className="group p-3 rounded-full bg-[var(--c-surface-2)] border border-[var(--c-border)] text-[var(--c-text-3)] hover:text-[var(--c-text)] hover:border-[var(--c-text-3)] transition-all"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-4 h-4 transition group-hover:-translate-y-0.5" />
+        </button>
       </div>
     </footer>
   );
