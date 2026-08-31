@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Sun, Moon } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Sun, Moon, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar({ theme, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,6 +74,14 @@ export default function Navbar({ theme, toggleTheme }) {
 
         {/* Desktop Theme Toggle & Action Button (Neobrutalist) */}
         <div className="hidden md:flex items-center gap-4">
+          <Link
+            to="/admin"
+            className="p-2 rounded-lg bg-white dark:bg-[#1e2438] border-[2px] border-[#10162f] dark:border-white text-[#10162f] dark:text-white shadow-[2px_2px_0px_0px_#10162f] dark:shadow-[2px_2px_0px_0px_#ffffff] hover:shadow-[3px_3px_0px_0px_#10162f] dark:hover:shadow-[3px_3px_0px_0px_#ffffff] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            aria-label="Admin Dashboard"
+            title="Admin Dashboard"
+          >
+            <Shield className="w-4 h-4" />
+          </Link>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-lg bg-white dark:bg-[#1e2438] border-[2px] border-[#10162f] dark:border-white text-[#10162f] dark:text-white shadow-[2px_2px_0px_0px_#10162f] dark:shadow-[2px_2px_0px_0px_#ffffff] hover:shadow-[3px_3px_0px_0px_#10162f] dark:hover:shadow-[3px_3px_0px_0px_#ffffff] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
@@ -92,6 +101,13 @@ export default function Navbar({ theme, toggleTheme }) {
 
         {/* Mobile Controls */}
         <div className="flex items-center gap-2 md:hidden">
+          <Link
+            to="/admin"
+            className="p-2 rounded-lg bg-white dark:bg-[#1e2438] border-[2px] border-[#10162f] dark:border-white text-[#10162f] dark:text-white shadow-[2px_2px_0px_0px_#10162f] dark:shadow-[2px_2px_0px_0px_#ffffff] transition-all cursor-pointer"
+            aria-label="Admin Dashboard"
+          >
+            <Shield className="w-4 h-4" />
+          </Link>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-lg bg-white dark:bg-[#1e2438] border-[2px] border-[#10162f] dark:border-white text-[#10162f] dark:text-white shadow-[2px_2px_0px_0px_#10162f] dark:shadow-[2px_2px_0px_0px_#ffffff] transition-all cursor-pointer"

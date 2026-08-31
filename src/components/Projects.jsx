@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { ExternalLink, FolderGit2, Layers } from 'lucide-react';
+import { ExternalLink, FolderGit2 } from 'lucide-react';
 import { Github } from './BrandIcons';
-import ecommerceImage from '../assets/e-com.png';
-import cgpaImage from '../assets/cgpa-image.png';
-import socialImage from '../assets/social2.png'
+import { useProjects } from '../hooks/useProjects';
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -15,52 +13,11 @@ export default function Projects() {
     { id: 'tools', name: 'Tools & Utilities' },
   ];
 
-  const projectsData = [
-    {
-      title: 'Full Stack Social Media Application',
-      description:
-        'A modern social media platform for developers featuring secure authentication, personalized feeds, follow/unfollow functionality, developer profiles, and interactive post engagement through likes and comments.',
-      tech: [
-        'React',
-        'Node.js',
-        'Express',
-        'MongoDB',
-        'Tailwind CSS',
-        'Cloudinary',
-        'JWT',
-        'bcrypt'
-      ],
-      category: 'fullstack',
-      image: socialImage,
-      demoUrl: 'https://stark-net-one.vercel.app/',
-      githubUrl: 'https://github.com/Vikaskkumar/StarkNet-',
-    },
-    {
-      title: 'ShopEase - Modern E-Commerce Store',
-      description:
-        'A responsive e-commerce web application built with React featuring product listings, category filtering, shopping cart functionality, product detail pages, and a streamlined checkout experience. Designed with a clean UI and optimized for performance across all devices.',
-      tech: ['React', 'Tailwind CSS', 'React Router', 'Context API', 'Vite'],
-      category: 'frontend',
-      image: ecommerceImage,
-      demoUrl: 'https://e-commerce1-fawn.vercel.app/',
-      githubUrl: 'https://github.com/Vikaskkumar/e-commerce1',
-    },
-
-    {
-      title: 'CGPA Calculator - Academic Grade Calculator',
-      description:
-        'A clean and responsive CGPA calculator built with React that allows students to calculate semester-wise and cumulative CGPA with real-time updates, grade-to-point conversion, and an intuitive user interface optimized for quick academic planning.',
-      tech: ['Tailwind CSS', 'JavaScript', 'Html'],
-      category: 'tools',
-      image: cgpaImage,
-      demoUrl: 'https://cgpa-calculator-ruddy-sigma.vercel.app/',
-      githubUrl: 'https://github.com/Vikaskkumar/cgpa-calculator',
-    },
-  ];
+  const { projects } = useProjects();
 
   const filteredProjects = activeFilter === 'all'
-    ? projectsData
-    : projectsData.filter((project) => project.category === activeFilter);
+    ? projects
+    : projects.filter((project) => project.category === activeFilter);
 
   return (
     <section id="projects" className="relative py-24 border-t border-slate-200 dark:border-slate-900 overflow-hidden">
@@ -104,7 +61,7 @@ export default function Projects() {
               className="group flex flex-col gradient-border-card rounded-2xl overflow-hidden hover:border-purple-500/30 dark:hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/5 transition-all duration-300 transform hover:-translate-y-1"
             >
               {/* Image Section */}
-              <div className="relative overflow-hidden aspect-video border-b border-slate-200 dark:border-slate-800/60">
+              <a href={project.demoUrl} target="_blank" rel="noreferrer" className="block relative overflow-hidden aspect-video border-b border-slate-200 dark:border-slate-800/60 cursor-pointer">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -115,7 +72,7 @@ export default function Projects() {
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
-              </div>
+              </a>
 
               {/* Body */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">

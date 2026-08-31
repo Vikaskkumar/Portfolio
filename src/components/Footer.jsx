@@ -1,5 +1,6 @@
-import { ArrowUp, Mail } from 'lucide-react';
+import { ArrowUp, Mail, Shield } from 'lucide-react';
 import { Github, Linkedin, Twitter } from './BrandIcons';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -17,6 +18,11 @@ export default function Footer() {
           <p className="text-xs text-slate-500">
             &copy; {currentYear} Vikas. All rights reserved. Built with React & Tailwind CSS.
           </p>
+          <div className="pt-1">
+            <Link to="/admin" className="inline-flex items-center gap-1 text-[10px] text-slate-400 hover:text-purple-500 transition">
+              <Shield className="w-3 h-3" /> Admin Login
+            </Link>
+          </div>
         </div>
 
         {/* Center: Social Links */}
