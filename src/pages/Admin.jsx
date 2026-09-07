@@ -29,8 +29,8 @@ export default function Admin({ theme, toggleTheme }) {
   };
 
   /* ── Hooks ──────────────────────────────────────────── */
-  const { projects, addProject, editProject, deleteProject, setAllProjects } = useProjects();
-  const { siteData, updateSiteData } = useSiteData();
+  const { projects, loading: projectsLoading, addProject, editProject, deleteProject, setAllProjects } = useProjects();
+  const { siteData, loading: siteDataLoading, updateSiteData } = useSiteData();
 
   /* ── Project Form State ─────────────────────────────── */
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -43,11 +43,13 @@ export default function Admin({ theme, toggleTheme }) {
   const [contactData, setContactData] = useState(siteData?.contact || { email: '', phone: '', location: '', whatsapp: '' });
   const [skillsJson, setSkillsJson] = useState(() => JSON.stringify(siteData?.skills || [], null, 2));
 
-  // Sync state if siteData updates from local storage
+  // Sync state if siteData updates from local storage or database
   useEffect(() => {
-    setContactData(siteData?.contact || { email: '', phone: '', location: '', whatsapp: '' });
-    setSkillsJson(JSON.stringify(siteData?.skills || [], null, 2));
-  }, [siteData]);
+    if (!siteDataLoading) {
+      setContactData(siteData?.contact || { email: '', phone: '', location: '', whatsapp: '' });
+      setSkillsJson(JSON.stringify(siteData?.skills || [], null, 2));
+    }
+  }, [siteData, siteDataLoading]);
 
   /* ── Backup helpers ─────────────────────────────────── */
   const handleExport = () => {
@@ -220,6 +222,17 @@ export default function Admin({ theme, toggleTheme }) {
     { id: 'contact', label: 'Contact Info', icon: Phone },
     { id: 'tools', label: 'Tools & Skills', icon: Wrench },
   ];
+
+  if (projectsLoading || siteDataLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--c-bg)] text-[var(--c-text)]">
+        <div className="flex flex-col items-center gap-6">
+          <div className="w-12 h-12 border-4 border-[var(--c-accent)] border-t-transparent rounded-full animate-spin"></div>
+          <p className="font-semibold text-lg animate-pulse text-[var(--c-text-2)]">Loading Data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--c-bg)] text-[var(--c-text)] pb-20 relative overflow-hidden">

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import resumePDF from '../assets/resume(vikas).pdf';
-
-const LOCAL_STORAGE_KEY = 'portfolio_sitedata';
 
 const devicon = (name, type = 'original') =>
   `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${name}/${name}-${type}.svg`;
@@ -97,28 +96,63 @@ const defaultData = {
 
 export function useSiteData() {
   const [siteData, setSiteData] = useState(defaultData);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setSiteData({ ...defaultData, ...parsed }); // Merge to ensure new fields are present
-      } catch (e) {
-        console.error('Failed to parse site data from local storage', e);
+  const fetchSiteData = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('site_data')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        throw error; // Ignore "no rows returned" error
+      }
+
+      if (data) {
+        setSiteData({
+          contact: data.contact && Object.keys(data.contact).length > 0 ? data.contact : defaultData.contact,
+          skills: data.skills && data.skills.length > 0 ? data.skills : defaultData.skills,
+          resume: data.resume && Object.keys(data.resume).length > 0 ? data.resume : defaultData.resume,
+        });
+      } else {
         setSiteData(defaultData);
       }
-    } else {
+    } catch (error) {
+      console.error('Error fetching site_data from Supabase:', error);
       setSiteData(defaultData);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaultData));
+    } finally {
+      setLoading(false);
     }
-  }, []);
-
-  const updateSiteData = (newData) => {
-    const updated = { ...siteData, ...newData };
-    setSiteData(updated);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
   };
 
-  return { siteData, updateSiteData };
+  useEffect(() => {
+    fetchSiteData();
+  }, []);
+
+  const updateSiteData = async (newData) => {
+    const updated = { ...siteData, ...newData };
+    
+    // Optimistic UI update
+    setSiteData(updated);
+
+    try {
+      const { error } = await supabase
+        .from('site_data')
+        .upsert({
+          id: 1, // Singleton row
+          contact: updated.contact,
+          skills: updated.skills,
+          resume: updated.resume
+        });
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error updating site_data in Supabase:', error);
+      alert('Failed to save configuration to database. See console.');
+    }
+  };
+
+  return { siteData, loading, updateSiteData };
 }

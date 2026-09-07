@@ -1,27 +1,16 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import ecommerceImage from '../assets/e-com.png';
 import cgpaImage from '../assets/cgpa-image.png';
 import socialImage from '../assets/social2.png';
 
-const LOCAL_STORAGE_KEY = 'portfolio_projects';
-
-// Default hardcoded projects
+// Fallback default projects just in case Supabase is empty initially
 const defaultProjects = [
   {
     id: '1',
     title: 'Full Stack Social Media Application',
-    description:
-      'A modern social media platform for developers featuring secure authentication, personalized feeds, follow/unfollow functionality, developer profiles, and interactive post engagement through likes and comments.',
-    tech: [
-      'React',
-      'Node.js',
-      'Express',
-      'MongoDB',
-      'Tailwind CSS',
-      'Cloudinary',
-      'JWT',
-      'bcrypt'
-    ],
+    description: 'A modern social media platform for developers...',
+    tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS'],
     category: 'fullstack',
     image: socialImage,
     demoUrl: 'https://stark-net-one.vercel.app/',
@@ -30,8 +19,7 @@ const defaultProjects = [
   {
     id: '2',
     title: 'ShopEase - Modern E-Commerce Store',
-    description:
-      'A responsive e-commerce web application built with React featuring product listings, category filtering, shopping cart functionality, product detail pages, and a streamlined checkout experience. Designed with a clean UI and optimized for performance across all devices.',
+    description: 'A responsive e-commerce web application...',
     tech: ['React', 'Tailwind CSS', 'React Router', 'Context API', 'Vite'],
     category: 'frontend',
     image: ecommerceImage,
@@ -41,8 +29,7 @@ const defaultProjects = [
   {
     id: '3',
     title: 'CGPA Calculator - Academic Grade Calculator',
-    description:
-      'A clean and responsive CGPA calculator built with React that allows students to calculate semester-wise and cumulative CGPA with real-time updates, grade-to-point conversion, and an intuitive user interface optimized for quick academic planning.',
+    description: 'A clean and responsive CGPA calculator...',
     tech: ['Tailwind CSS', 'JavaScript', 'Html'],
     category: 'tools',
     image: cgpaImage,
@@ -53,49 +40,110 @@ const defaultProjects = [
 
 export function useProjects() {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      
+      const mappedData = data ? data.map(p => ({
+        ...p,
+        demoUrl: p.demourl,
+        githubUrl: p.githuburl
+      })) : [];
+
+      setProjects(mappedData);
+    } catch (error) {
+      console.error('Error fetching projects from Supabase:', error);
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Load from local storage or use defaults
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (stored) {
-      try {
-        setProjects(JSON.parse(stored));
-      } catch (e) {
-        console.error('Failed to parse projects from local storage', e);
-        setProjects(defaultProjects);
-      }
-    } else {
-      setProjects(defaultProjects);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaultProjects));
-    }
+    fetchProjects();
   }, []);
 
-  const addProject = (newProject) => {
-    const projectWithId = {
-      ...newProject,
-      id: Date.now().toString(),
-    };
-    const updated = [...projects, projectWithId];
-    setProjects(updated);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+  const addProject = async (newProject) => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .insert([{
+          title: newProject.title,
+          description: newProject.description,
+          tech: newProject.tech,
+          category: newProject.category,
+          image: newProject.image,
+          demourl: newProject.demoUrl,
+          githuburl: newProject.githubUrl
+        }])
+        .select();
+
+      if (error) throw error;
+      
+      if (data) {
+        const mappedData = { ...data[0], demoUrl: data[0].demourl, githubUrl: data[0].githuburl };
+        setProjects(prev => [mappedData, ...prev]);
+      }
+    } catch (error) {
+      console.error('Error adding project to Supabase:', error);
+      alert('Failed to add project to database. See console.');
+    }
   };
 
-  const editProject = (updatedProject) => {
-    const updated = projects.map(p => p.id === updatedProject.id ? updatedProject : p);
-    setProjects(updated);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+  const editProject = async (updatedProject) => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .update({
+          title: updatedProject.title,
+          description: updatedProject.description,
+          tech: updatedProject.tech,
+          category: updatedProject.category,
+          image: updatedProject.image,
+          demourl: updatedProject.demoUrl,
+          githuburl: updatedProject.githubUrl
+        })
+        .eq('id', updatedProject.id)
+        .select();
+
+      if (error) throw error;
+      
+      if (data) {
+        const mappedData = { ...data[0], demoUrl: data[0].demourl, githubUrl: data[0].githuburl };
+        setProjects(prev => prev.map(p => p.id === updatedProject.id ? mappedData : p));
+      }
+    } catch (error) {
+      console.error('Error updating project in Supabase:', error);
+      alert('Failed to update project in database. See console.');
+    }
   };
 
-  const deleteProject = (id) => {
-    const updated = projects.filter(p => p.id !== id);
-    setProjects(updated);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+  const deleteProject = async (id) => {
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      setProjects(prev => prev.filter(p => p.id !== id));
+    } catch (error) {
+      console.error('Error deleting project from Supabase:', error);
+      alert('Failed to delete project from database. See console.');
+    }
   };
 
-  const setAllProjects = (newProjectsList) => {
+  const setAllProjects = async (newProjectsList) => {
     setProjects(newProjectsList);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newProjectsList));
+    console.warn('Backup imported to local state only. Bulk save to Supabase not implemented yet.');
   };
 
-  return { projects, addProject, editProject, deleteProject, setAllProjects };
+  return { projects, loading, addProject, editProject, deleteProject, setAllProjects };
 }
